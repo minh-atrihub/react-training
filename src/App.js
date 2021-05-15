@@ -5,7 +5,6 @@ import {
   Route,
 } from "react-router-dom";
 import Main from './components/Main';
-import New from './components/New';
 
 export default function App() {
   return (
@@ -14,9 +13,6 @@ export default function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/new">
-            <New />
-          </Route>
           <Route path="/main">
             <Main />
           </Route>

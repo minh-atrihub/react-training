@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import Details from "./Details";
+import New from "./New";
 
 const initData = [
   {
@@ -29,9 +30,13 @@ const initData = [
 const Main = () => {
   let { path, url } = useRouteMatch();
   const [data, setData] = useState([]);
+  const [counter, setCounter] = useState();
   useEffect(() => {
     setData(initData)
   }, [])
+  useEffect(() => {
+    setCounter(data.length)
+  }, [data])
   const memoData = useMemo(() => data, [data])
   const columns = useMemo(() =>
     [
@@ -52,13 +57,14 @@ const Main = () => {
     [url]
   )
 
-  const handleUpdate = (id, newData) => () => {
+  const handleUpdate = (id, newSummary, newStatus) => {
     setData(old =>
       old.map((row) => {
         if (row.key === id) {
           return {
             ...row,
-            'summary': newData,
+            'summary': newSummary,
+            'status': newStatus,
           }
         }
         return row
@@ -66,17 +72,26 @@ const Main = () => {
     )
   }
 
+  const handleAdd = (newData) => {
+    setData(data.concat(newData))
+  }
+
   return (
     <div className='container' style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
-      <div>
-        <Table columns={columns} data={memoData} />
-      </div>
-      <div>
-        <Link to="/new">
-          <button>Create New Task</button>
-        </Link>
-      </div>
       <Switch>
+        <Route exact path={`${path}`}>
+          <div>
+            <Table columns={columns} data={memoData} />
+          </div>
+          <div>
+            <Link to={`${url}/new`}>
+              <button>Create New Task</button>
+            </Link>
+          </div>
+        </Route>
+        <Route path={`${path}/new`}>
+          <New numTask={counter} addData={handleAdd} />
+        </Route>
         <Route path={`${path}/:taskId`}>
           <Details mainData={memoData} updateData={handleUpdate} />
         </Route>

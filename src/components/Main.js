@@ -1,6 +1,6 @@
 import { Link, useRouteMatch } from "react-router-dom";
 import React, { useEffect, useMemo, useState } from 'react';
-import Table from '../shared/Table';
+import MyTable from '../shared/MyTable';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Details from "./Details";
 import New from "./New";
+import { Container, Button } from 'reactstrap';
 
 const initData = [
   {
@@ -77,15 +78,15 @@ const Main = () => {
   }
 
   return (
-    <div className='container' style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
+    <Container style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
       <Switch>
         <Route exact path={`${path}`}>
-          <div>
-            <Table columns={columns} data={memoData} />
+          <div style={{ width: '500px' }}>
+            <MyTable columns={columns} data={memoData} />
           </div>
           <div>
             <Link to={`${url}/new`}>
-              <button>Create New Task</button>
+              <Button color='success'>Create New Task</Button>
             </Link>
           </div>
         </Route>
@@ -96,7 +97,7 @@ const Main = () => {
           <Details mainData={memoData} updateData={handleUpdate} />
         </Route>
       </Switch>
-    </div>
+    </Container>
   );
 }
 

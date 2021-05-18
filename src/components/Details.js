@@ -1,6 +1,7 @@
-import Table from '../shared/Table';
+import MyTable from '../shared/MyTable';
 import { useParams, useHistory } from "react-router-dom";
 import React, { useEffect, useMemo, useState } from 'react';
+import { Button, Input } from 'reactstrap';
 
 const Details = ({ mainData, updateData }) => {
   let { taskId } = useParams();
@@ -12,7 +13,6 @@ const Details = ({ mainData, updateData }) => {
   useEffect(() => {
     const obj = mainData.find(o => o.key === taskId);
     setData([obj]);
-    console.log('details: ', mainData)
   }, [mainData, taskId])
 
   const memoData = useMemo(() => data, [data])
@@ -38,7 +38,7 @@ const Details = ({ mainData, updateData }) => {
       setNewSummary(initialValue)
     }, [initialValue])
 
-    return <input value={value} onChange={onChange} />
+    return <Input value={value} onChange={onChange} />
   }
 
   // Create an editable cell renderer
@@ -60,13 +60,12 @@ const Details = ({ mainData, updateData }) => {
     React.useEffect(() => {
       setValue(initialValue)
       setNewStatus(initialValue)
-      console.log('select: ', initialValue, data)
     }, [initialValue])
 
-    return <select onChange={onChange} value={value}>
+    return <Input type='select' onChange={onChange} value={value}>
       <option value="todo">To Do</option>
       <option value="done">Done</option>
-    </select>
+    </Input>
   }
 
   const columns = useMemo(() =>
@@ -94,10 +93,10 @@ const Details = ({ mainData, updateData }) => {
   }
   return (
     <div>
-      <Table columns={columns} data={memoData} />
+      <MyTable columns={columns} data={memoData} />
       <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-        <button onClick={() => history.push('/main')}>Back</button>
-        <button onClick={handleClick}>Submit</button>
+        <Button onClick={() => history.push('/main')}>Back</Button>
+        <Button color='success' onClick={handleClick}>Submit</Button>
       </div>
     </div>
   );

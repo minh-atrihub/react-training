@@ -1,48 +1,35 @@
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
+import { Button, Form, Input } from "reactstrap";
+import MyInput from '../shared/MyInput'
 
 const New = ({ numTask, addData }) => {
   let history = useHistory();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors } } = useForm({ mode: 'onSubmit' });
+
   const onSubmit = (data) => {
     data = {
       ...data,
-      'key': `ICT-${numTask+1}`,
+      'key': `ICT-${numTask + 1}`,
       'status': { 'label': 'To Do', 'value': 'todo' }
     }
-    console.log('submit: ', data)
     addData(data)
     history.push('/main')
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-          <label htmlFor='key'>Key</label>
-          <input 
-            value={`ICT-${numTask+1}`} 
-            disabled
-            {...register('key')} />
-        </div>
-        <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-          <label htmlFor='summary'>Summary</label>
-          <input placeholder='Enter Summary' {...register('summary')} />
-        </div>
-        <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-          <label htmlFor='status'>Status</label>
-          <input
-            value='To Do'
-            disabled
-            {...register("status")}
-          />
-        </div>
-        <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
-          <button onClick={() => history.push('/main')}>Back</button>
-          <input type='submit' />
-        </div>
-      </form>
-    </div>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <MyInput register={register} errors={errors} labelName="Key" inputValue={`ICT-${numTask + 1}`} setReadOnly />
+      <MyInput register={register} errors={errors} labelName="Summary" setRequired />
+      <MyInput register={register} errors={errors} labelName="Status" inputValue='To Do' setReadOnly />
+      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
+        <Button onClick={() => history.push('/main')}>Back</Button>
+        <Input type='submit' style={{ width: '50%' }} />
+      </div>
+    </Form>
   );
 }
 

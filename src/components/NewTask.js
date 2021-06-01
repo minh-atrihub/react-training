@@ -5,7 +5,7 @@ import { Button, Form, Input, FormGroup, Label, Col } from "reactstrap";
 import MyInput from '../shared/MyInput';
 import DatePicker from "react-datepicker";
 
-const New = ({ numTask, addData }) => {
+const NewTask = ({ numTask, addData }) => {
   let history = useHistory();
   const [startDate, setStartDate] = useState(new Date());
   const {
@@ -48,10 +48,10 @@ const New = ({ numTask, addData }) => {
       </FormGroup>
       <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between' }}>
         <Button onClick={() => history.push('/main')}>Back</Button>
-        <Input type='submit' style={{ width: '50%' }} />
+        <Button type='submit' color='success'>Submit</Button>
       </div>
     </Form>
   );
 }
 
-export default New;
+export default NewTask;

@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Main from './components/Main';
+import TaskList from './components/TaskList';
 
 export default function App() {
   return (
@@ -14,7 +14,7 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/main">
-            <Main />
+            <TaskList />
           </Route>
         </Switch>
       </div>

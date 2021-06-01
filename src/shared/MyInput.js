@@ -1,12 +1,14 @@
 import { FormGroup, Label, Input, Col } from "reactstrap";
 
-const MyInput = ({ register, errors, labelName, inputValue, setReadOnly=false, setRequired=false }) => {
+const MyInput = ({ register, errors, labelName, inputValue, setReadOnly = false, setRequired = false }) => {
   let lowerLabel = labelName.toLowerCase()
   return (
     <FormGroup row style={{ marginBottom: '10px' }}>
       <Label for={lowerLabel} sm={4}>{labelName}</Label>
       <Col sm={8}>
         <Input
+          id={lowerLabel}
+          type="text"
           value={inputValue}
           readOnly={setReadOnly}
           {...register(lowerLabel, setRequired ? { required: 'This is required' } : null)}

@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button, Input } from 'reactstrap';
 
-const Details = ({ mainData, updateData }) => {
+const TaskDetail = ({ mainData, updateData }) => {
   let { taskId } = useParams();
   let history = useHistory();
   const [data, setData] = useState([]);
@@ -102,4 +102,4 @@ const Details = ({ mainData, updateData }) => {
   );
 }
 
-export default Details;
+export default TaskDetail;

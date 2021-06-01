@@ -6,8 +6,8 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Details from "./Details";
-import New from "./New";
+import TaskDetails from "./TaskDetail";
+import NewTask from "./NewTask";
 import { Container, Button } from 'reactstrap';
 
 const initData = [
@@ -28,7 +28,7 @@ const initData = [
   },
 ]
 
-const Main = () => {
+const TaskList = () => {
   let { path, url } = useRouteMatch();
   const [data, setData] = useState([]);
   const [counter, setCounter] = useState();
@@ -79,26 +79,29 @@ const Main = () => {
 
   return (
     <Container style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-around' }}>
-      <Switch>
-        <Route exact path={`${path}`}>
-          <div style={{ width: '500px' }}>
-            <MyTable columns={columns} data={memoData} />
-          </div>
-          <div>
-            <Link to={`${url}/new`}>
-              <Button color='success'>Create New Task</Button>
-            </Link>
-          </div>
-        </Route>
-        <Route path={`${path}/new`}>
-          <New numTask={counter} addData={handleAdd} />
-        </Route>
-        <Route path={`${path}/:taskId`}>
-          <Details mainData={memoData} updateData={handleUpdate} />
-        </Route>
-      </Switch>
+      <Router>
+        <Switch>
+          <Route exact path={`${path}`}>
+            <div style={{ width: '500px' }}>
+              <MyTable columns={columns} data={memoData} />
+            </div>
+            <div>
+              <Link to={`${url}/new`}>
+                <Button color='success'>Create New Task</Button>
+              </Link>
+            </div>
+          </Route>
+          <Route path={`${path}/new`}>
+            <NewTask numTask={counter} addData={handleAdd} />
+          </Route>
+          <Route path={`${path}/:taskId`}>
+            <TaskDetails mainData={memoData} updateData={handleUpdate} />
+          </Route>
+        </Switch>
+      </Router>
+
     </Container>
   );
 }
 
-export default Main;
+export default TaskList;
